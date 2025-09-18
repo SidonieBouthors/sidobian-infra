@@ -1,19 +1,12 @@
 services:
-  website:
-    image: ghcr.io/sidoniebouthors/sidonie.me:latest
-    container_name: website
-    restart: unless-stopped
-    networks:
-      - website-network
-
   cloudflare:
     image: cloudflare/cloudflared:latest
     container_name: cloudflare_tunnel
     restart: unless-stopped
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
     networks:
-      - website-network
+      - cloudflare-network
 
 networks:
-  website-network:
-    driver: bridge
+  cloudflare-network:
+    external: true

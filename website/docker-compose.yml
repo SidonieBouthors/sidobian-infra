@@ -1,0 +1,11 @@
+services:
+  website:
+    image: ghcr.io/sidoniebouthors/sidonie.me:latest
+    container_name: website
+    restart: unless-stopped
+    networks:
+      - cloudflare-network
+
+networks:
+  cloudflare-network:
+    external: true
