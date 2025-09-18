@@ -1,0 +1,24 @@
+services:
+  flame-games:
+    image: pawelmalak/flame
+    container_name: flame-games
+    restart: unless-stopped
+    volumes:
+      - flame-games-data:/app/data
+    secrets:
+      - password
+    environment:
+      - PASSWORD_FILE=/run/secrets/password
+    networks:
+      - cloudflare-network # http://flame-games:5005
+
+secrets:
+  password:
+    file: ./secrets/password.txt
+
+volumes:
+  flame-games-data:
+
+networks:
+  cloudflare-network:
+    external: true
