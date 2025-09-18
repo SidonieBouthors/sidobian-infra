@@ -4,7 +4,7 @@ services:
     container_name: website
     restart: unless-stopped
     networks:
-      - cloudflare-network
+      - cloudflare-network # http://website:80
 
 networks:
   cloudflare-network:

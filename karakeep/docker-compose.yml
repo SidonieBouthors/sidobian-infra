@@ -46,7 +46,7 @@ services:
     volumes:
       - karakeep-meilisearch:/meili_data
     networks:
-      - cloudflare-network
+      - cloudflare-network # http://karakeep-web:3000
 
 volumes:
   karakeep-meilisearch:
