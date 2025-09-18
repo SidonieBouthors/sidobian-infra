@@ -1,0 +1,25 @@
+services:
+  flame:
+    image: pawelmalak/flame
+    container_name: flame
+    restart: unless-stopped
+    volumes:
+      - flame-data:/app/data
+      # - /var/run/docker.sock:/var/run/docker.sock # optional but required for Docker integration
+    secrets:
+      - password
+    environment:
+      - PASSWORD_FILE=/run/secrets/password
+    networks:
+      - cloudflare-network # http://flame:5005
+
+secrets:
+  password:
+    file: ./secrets/password.txt
+
+volumes:
+  flame-data:
+
+networks:
+  cloudflare-network:
+    external: true
