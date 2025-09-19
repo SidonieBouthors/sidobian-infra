@@ -1,0 +1,16 @@
+services:
+  tududi:
+    image: 'chrisvel/tududi:latest'
+    volumes:
+      - tududi-data:/usr/src/app/tududi_db
+    env_file:
+      - .env
+    networks:
+      - cloudflare-network # http://tududi:3002
+
+networks:
+  cloudflare-network:
+    external: true
+
+volumes:
+  tududi-data:
