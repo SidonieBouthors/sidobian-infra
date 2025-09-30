@@ -1,0 +1,11 @@
+services:
+  gerrymandering:
+    image: ghcr.io/sidoniebouthors/gerrymandering-game:latest
+    container_name: gerrymandering
+    restart: unless-stopped
+    networks:
+      - cloudflare-network # http://gerrymandering:3000
+
+networks:
+  cloudflare-network:
+    external: true
