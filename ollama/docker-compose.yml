@@ -1,0 +1,32 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    volumes:
+       - ollama_data:/root/.ollama
+    environment:
+       - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped
+    networks:
+      - cloudflare-network # http://ollama:11434
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    volumes:
+       - openwebui_data:/app/Backend/Data
+    environment:
+       - OLLAMA_BASE_URL=http://ollama:11434
+    extra_hosts:
+       - "host.docker.internal:host-gateway"
+    restart: always
+    networks:
+      - cloudflare-network # http://open-webui:8080
+
+networks:
+  cloudflare-network:
+    external: true
+
+volumes:
+  ollama_data:
+  openwebui_data:
