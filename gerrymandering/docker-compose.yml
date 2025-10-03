@@ -1,6 +1,6 @@
 services:
   gerrymandering:
-    image: ghcr.io/sidoniebouthors/gerrymandering-game:latest
+    image: ghcr.io/sidoniebouthors/gerrymandering-game-frontend:main
     container_name: gerrymandering
     restart: unless-stopped
     networks:
