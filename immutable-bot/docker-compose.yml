@@ -1,0 +1,11 @@
+services:
+  immutable-bot:
+    image: ghcr.io/sidoniebouthors/immutable-bot:main
+    container_name: immutable-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    environment:
+      - RUST_LOG=info
