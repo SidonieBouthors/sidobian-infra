@@ -3,6 +3,8 @@ services:
     image: ghcr.io/sidoniebouthors/gerrymandering-game-frontend:main
     container_name: gerrymandering
     restart: unless-stopped
+    env_file:
+      - .env
     networks:
       - cloudflare-network # http://gerrymandering:3000
 
