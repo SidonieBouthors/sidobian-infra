@@ -1,0 +1,44 @@
+services:
+  minecraft-copaings: 
+    image: itzg/minecraft-server:java25
+    container_name: minecraft-copaings
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    env_file:
+      - .env
+    environment:
+      EULA: "TRUE"
+      TYPE: "VANILLA"
+      VERSION: "26.2"
+      DIFFICULTY: "normal"
+      MAX_MEMORY: "8G"
+      # always restore the whitelist with users set via env variable
+      EXISTING_WHITELIST_FILE: "SYNCHRONIZE"
+      # always restore the ops with users set via env variables
+      EXISTING_OPS_FILE: "SYNCHRONIZE"
+    volumes:
+      - ./data:/data
+    networks:
+      minecraft-network:
+        ipv4_address: 172.28.0.10 # Fixed static IP
+
+  playit-agent:
+    image: ghcr.io/playit-cloud/playit-agent:0.17
+    container_name: playit-agent
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - minecraft-copaings
+    networks:
+      - minecraft-network
+
+networks:
+  minecraft-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+  cloudflare-network:
+    external: true
