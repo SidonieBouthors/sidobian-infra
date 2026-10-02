@@ -1,0 +1,15 @@
+services:
+  actual_server:
+    image: actualbudget/actual-server:latest
+    container_name: actual-budget
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    env_file:
+      - .env
+    networks:
+      - cloudflare-network # http://actual-budget:5006
+
+networks:
+  cloudflare-network:
+    external: true
