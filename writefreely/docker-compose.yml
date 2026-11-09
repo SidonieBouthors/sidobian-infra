@@ -1,0 +1,15 @@
+services:
+  writefreely:
+    image: writeas/writefreely:latest
+    container_name: writefreely
+    restart: unless-stopped
+    volumes:
+      - ./data:/go/data
+      - ./keys:/go/keys
+      - ./config.ini:/go/config.ini
+    networks:
+      - cloudflare-network # http://writefreely:8080
+
+networks:
+  cloudflare-network:
+    external: true
