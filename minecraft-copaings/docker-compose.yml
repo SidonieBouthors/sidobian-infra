@@ -10,13 +10,16 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "VANILLA"
-      VERSION: "26.2"
+      VERSION: "26.3"
       DIFFICULTY: "normal"
       MAX_MEMORY: "8G"
       # always restore the whitelist with users set via env variable
       EXISTING_WHITELIST_FILE: "SYNCHRONIZE"
       # always restore the ops with users set via env variables
       EXISTING_OPS_FILE: "SYNCHRONIZE"
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     volumes:
       - ./data:/data
     networks:
