@@ -19,6 +19,26 @@ services:
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${UPLOAD_LOCATION}:/data
+      - type: bind
+        source: /mnt/immich/library
+        target: /data/library
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /mnt/immich/upload
+        target: /data/upload
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /mnt/immich/profile
+        target: /data/profile
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /mnt/immich/backups
+        target: /data/backups
+        bind:
+          create_host_path: false
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
