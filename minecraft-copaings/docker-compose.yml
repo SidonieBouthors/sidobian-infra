@@ -1,5 +1,5 @@
 services:
-  minecraft-copaings: 
+  minecraft-copaings:
     image: itzg/minecraft-server:java25
     container_name: minecraft-copaings
     restart: unless-stopped
@@ -9,8 +9,11 @@ services:
       - .env
     environment:
       EULA: "TRUE"
-      TYPE: "VANILLA"
+      TYPE: "PAPER"
       VERSION: "26.3"
+      MODRINTH_PROJECTS: |
+        justlootit
+        huskhomes
       DIFFICULTY: "normal"
       MAX_MEMORY: "8G"
       # always restore the whitelist with users set via env variable
@@ -25,6 +28,27 @@ services:
     networks:
       minecraft-network:
         ipv4_address: 172.28.0.10 # Fixed static IP
+
+  minecraft-copaings-backup:
+    image: itzg/mc-backup
+    container_name: minecraft-copaings-backup
+    restart: unless-stopped
+    user: "1001:1001"
+    depends_on:
+      - minecraft-copaings
+    env_file:
+      - .env
+    environment:
+      RCON_HOST: minecraft-copaings
+      BACKUP_CRON: "0 4 * * *" # 4:00 AM daily
+      INITIAL_DELAY: "5m"
+      PRUNE_BACKUPS_DAYS: "7"
+      PAUSE_IF_NO_PLAYERS: "true"
+    volumes:
+      - ./data:/data:ro
+      - ./backups:/backups
+    networks:
+      - minecraft-network
 
   playit-agent:
     image: ghcr.io/playit-cloud/playit-agent:0.17
